@@ -4,6 +4,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { DatePipe, CurrencyPipe } from '@angular/common';
 import { FlightSearchResult } from '../../models/flight-search-result';
 import { BookingRequest } from '../../models/booking-request';
+import { FlightService } from '../../services/flight.service';
 
 @Component({
   selector: 'app-booking',
@@ -19,16 +20,14 @@ export class BookingComponent implements OnChanges {
 
   form: FormGroup;
 
-  airportCountryMap: Record<string, string> = {
-    JFK: 'USA', LAX: 'USA', ORD: 'USA',
-    LHR: 'UK', CDG: 'France', DXB: 'UAE'
-  };
+  airportCountryMap: Record<string, string> = {};
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private flightService: FlightService) {
     this.form = this.fb.group({
       passengers:
         this.fb.array([])
     });
+    this.airportCountryMap = this.flightService.getAirportCountryMap();
   }
 
   ngOnChanges(changes: SimpleChanges) {

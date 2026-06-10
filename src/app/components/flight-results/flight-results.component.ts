@@ -15,9 +15,7 @@ export class FlightResultsComponent {
   @Input() loading: boolean = false;
   @Input() hasSearched: boolean = false;
   @Output() selectFlight = new EventEmitter<FlightSearchResult>();
-
-  sortField
-    : string = 'pricePerPassenger';
+  sortField: string = 'pricePerPassenger';
   sortDirection: 'asc' | 'desc' = 'asc';
 
   get sortedResults(): FlightSearchResult[] {

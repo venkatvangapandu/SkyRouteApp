@@ -1,17 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FlightSearchComponent } from './flight-search.component';
+import { FlightService } from '../../services/flight.service';
 
-import { FlightSearch } from './flight-search';
-
-describe('FlightSearch', () => {
-  let component: FlightSearch;
-  let fixture: ComponentFixture<FlightSearch>;
+describe('FlightSearchComponent', () => {
+  let component: FlightSearchComponent;
+  let fixture: ComponentFixture<FlightSearchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FlightSearch],
+      imports: [FlightSearchComponent, ReactiveFormsModule],
+      providers: [FlightService]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FlightSearch);
+    fixture = TestBed.createComponent(FlightSearchComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
