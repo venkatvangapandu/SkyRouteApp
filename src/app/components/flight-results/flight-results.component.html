@@ -1,0 +1,45 @@
+<div class="results-container">
+  <div *ngIf="loading" class="loading-indicator">
+    <span class="loader"></span> Loading flights...
+  </div>
+  <div *ngIf="!loading && hasSearched && sortedResults.length === 0" class="empty-state">
+    <span>🛫</span>
+    <p>No flights found for your search.</p>
+  </div>
+  <div *ngIf="!loading && sortedResults.length > 0" class="table-wrapper">
+    <table class="results-table">
+      <thead>
+        <tr>
+          <th (click)="setSort('provider')">Provider</th>
+          <th (click)="setSort('flightNumber')">Flight #</th>
+          <th (click)="setSort('departureTime')">Departure</th>
+          <th (click)="setSort('arrivalTime')">Arrival</th>
+          <th (click)="setSort('duration')">Duration</th>
+          <th (click)="setSort('cabinClass')">Class</th>
+          <th (click)="setSort('pricePerPassenger')">Price/Person</th>
+          <th>Total</th>
+          <th>Select</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let flight of sortedResults">
+          <td>{{flight.provider}}</td>
+          <td>{{flight.flightNumber}}</td>
+          <td>{{flight.departureTime | date:'short'}}</td>
+          <td>{{flight.arrivalTime | date:'short'}}</td>
+          <td>{{flight.duration}}</td>
+          <td>{{flight.cabinClass}}</td>
+          <td>
+            <span class="price-person">{{flight.pricePerPassenger | currency}}</span>
+          </td>
+          <td>
+            <span class="price-total">{{flight.totalPrice | currency}}</span>
+          </td>
+          <td>
+            <button class="select-btn" (click)="selectFlight.emit(flight)">Book</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

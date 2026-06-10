@@ -1,0 +1,15 @@
+<div class="main-container">
+    <h1>SkyRoute Travel Platform</h1>
+    <app-flight-search [loading]="loading" (search)="onSearch($event)"></app-flight-search>
+    <div *ngIf="errorMessage" class="error-message">{{errorMessage}}</div>
+    <app-flight-results [results]="results" [loading]="loading" [hasSearched]="hasSearched"
+        (selectFlight)="onSelectFlight($event)">
+    </app-flight-results>
+    <app-booking *ngIf="selectedFlight" [flight]="selectedFlight" [passengersCount]="passengersCount"
+        (book)="onBook($event)">
+    </app-booking>
+    <div *ngIf="bookingResponse" class="booking-ref">
+        <span>Booking Reference:</span>
+        <strong>{{bookingResponse?.bookingReference}}</strong>
+    </div>
+</div>

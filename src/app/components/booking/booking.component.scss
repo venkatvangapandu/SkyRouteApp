@@ -1,0 +1,73 @@
+.booking-container {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0001;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  h2 {
+    margin-bottom: 1rem;
+    color: #1976d2;
+  }
+  .flight-summary {
+    margin-bottom: 1.5rem;
+    div {
+      margin-bottom: 0.3rem;
+    }
+    .price-person {
+      color: #1976d2;
+      font-weight: 500;
+    }
+    .price-total {
+      color: #388e3c;
+      font-weight: 700;
+    }
+  }
+  .booking-form {
+    .passenger-form {
+      background: #f5f7fa;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      h4 {
+        margin-bottom: 0.7rem;
+        color: #1976d2;
+      }
+      label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.2rem;
+      }
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+      }
+      .error {
+        color: #e53935;
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
+    }
+    button[type="submit"] {
+      background: #388e3c;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+      &:hover {
+        background: #2e7031;
+      }
+      &:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

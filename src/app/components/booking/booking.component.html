@@ -1,0 +1,61 @@
+<div class="booking-container" *ngIf="flight">
+  <h2>Booking for {{flight.provider}} {{flight.flightNumber}}</h2>
+  <div class="flight-summary">
+    <div>
+      <strong>From:</strong> {{flight.origin}} &nbsp; <strong>To:</strong> {{flight.destination}}
+    </div>
+    <div>
+      <strong>Departure:</strong> {{flight.departureTime | date:'short'}} &nbsp;
+      <strong>Arrival:</strong> {{flight.arrivalTime | date:'short'}}
+    </div>
+    <div>
+      <strong>Class:</strong> {{flight.cabinClass}}
+    </div>
+    <div>
+      <strong>Price per passenger:</strong>
+      <span class="price-person">{{flight.pricePerPassenger | currency}}</span>
+    </div>
+    <div>
+      <strong>Total:</strong>
+      <span class="price-total">{{flight.totalPrice | currency}}</span>
+    </div>
+  </div>
+  <form [formGroup]="form" (ngSubmit)="submit()" class="booking-form">
+    <div formArrayName="passengers">
+      <div *ngFor="let passenger of passengers.controls; let i = index" [formGroupName]="i" class="passenger-form">
+        <h4>Passenger {{i + 1}}</h4>
+        <div>
+          <label>Full Name</label>
+          <input formControlName="fullName" type="text" placeholder="Full Name">
+          <div class="error" *ngIf="passenger.get('fullName')?.touched && passenger.get('fullName')?.invalid">
+            Required
+          </div>
+        </div>
+        <div>
+          <label>Email</label>
+          <input formControlName="email" type="email" placeholder="Email">
+          <div class="error" *ngIf="passenger.get('email')?.touched && passenger.get('email')?.invalid">
+            Valid email required
+          </div>
+        </div>
+        <div>
+          <label>{{documentLabel}}</label>
+          <input formControlName="documentNumber" type="text" [placeholder]="documentLabel">
+          <div class="error"
+            *ngIf="passenger.get('documentNumber')?.touched && passenger.get('documentNumber')?.invalid">
+            <span *ngIf="isInternational && passenger.get('documentNumber')?.errors?.['passport']">
+              Passport: 6-9 alphanumeric
+            </span>
+            <span *ngIf="!isInternational && passenger.get('documentNumber')?.errors?.['nationalId']">
+              National ID: 6-12 digits
+            </span>
+            <span *ngIf="passenger.get('documentNumber')?.errors?.['required']">
+              Required
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+   <button type="submit" [disabled]="form.invalid">Confirm Booking</button>
+  </form>
+</div>

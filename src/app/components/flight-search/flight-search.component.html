@@ -1,0 +1,48 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="search-form">
+  <div class="form-row">
+    <div class="form-group">
+      <label for="origin">Origin</label>
+      <select id="origin" formControlName="origin" [disabled]="loading">
+        <option value="" disabled>Select origin</option>
+        <option *ngFor="let airport of airports" [value]="airport.code">{{airport.name}}</option>
+      </select>
+      <div class="error" *ngIf="form.get('origin')?.touched && form.get('origin')?.invalid">Required</div>
+    </div>
+    <div class="form-group">
+      <label for="destination">Destination</label>
+      <select id="destination" formControlName="destination" [disabled]="loading">
+        <option value="" disabled>Select destination</option>
+        <option *ngFor="let airport of airports" [value]="airport.code">{{airport.name}}</option>
+      </select>
+      <div class="error" *ngIf="form.get('destination')?.touched && form.get('destination')?.invalid">Required</div>
+    </div>
+    <div class="form-group">
+      <label for="departureDate">Departure Date</label>
+      <input type="date" id="departureDate" formControlName="departureDate" [disabled]="loading">
+      <div class="error" *ngIf="form.get('departureDate')?.touched && form.get('departureDate')?.invalid">Required</div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label for="passengers">Passengers</label>
+      <select id="passengers" formControlName="passengers" [disabled]="loading">
+        <option value="" disabled selected>Select passengers</option>
+        <option *ngFor="let n of passengerOptions" [value]="n">{{n}}</option>
+      </select>
+      <div class="error" *ngIf="form.get('passengers')?.touched && form.get('passengers')?.invalid">
+        1-9 required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="cabinClass">Cabin Class</label>
+      <select id="cabinClass" formControlName="cabinClass" [disabled]="loading">
+        <option value="" disabled selected>Select cabin class</option>
+        <option *ngFor="let c of cabinClasses" [value]="c">{{c}}</option>
+      </select>
+      </div>
+    <div class="form-group submit-group">
+      <button type="submit" [disabled]="form
+.invalid || loading">Search Flights</button>
+    </div>
+  </div>
+</form>
