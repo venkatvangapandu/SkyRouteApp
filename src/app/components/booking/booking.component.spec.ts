@@ -43,15 +43,18 @@ describe('BookingComponent', () => {
     component.setPassengers(1);
     // international because AAA != BBB
     const docControl = component.passengers.at(0).get('documentNumber');
-    docControl?.setValue('invalid');
+    // invalid passport (too short / wrong chars)
+    docControl?.setValue('123');
     component.updateDocumentValidators();
-    expect(docControl?.valid).toBeFalse();
+    expect(docControl?.valid).toBeFalsy();
+    // valid passport: 6 alphanumeric
     docControl?.setValue('A123456');
-    expect(docControl?.valid).toBeTrue();
+    component.updateDocumentValidators();
+    expect(docControl?.valid).toBeTruthy();
   });
 
   it('should emit booking request when form valid and submitted', () => {
-    spyOn(component.book, 'emit');
+    vi.spyOn(component.book, 'emit');
     component.flight = { provider: 'P', flightNumber: 'F1', origin: 'AAA', destination: 'BBB', departureTime: '', arrivalTime: '', duration: '', cabinClass: '', pricePerPassenger: 100, totalPrice: 200 };
     component.setPassengers(1);
     const p = component.passengers.at(0);

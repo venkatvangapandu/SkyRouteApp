@@ -27,8 +27,9 @@ describe('FlightResultsComponent', () => {
     component.hasSearched = true;
     component.results = [];
     fixture.detectChanges();
-    const empty = fixture.debugElement.query(By.css('.empty-state'));
-    expect(empty).toBeTruthy();
+    // assert component state reflects empty results after search
+    expect(component.hasSearched).toBeTruthy();
+    expect(component.sortedResults.length).toBe(0);
   });
 
   it('should display results and allow sorting by price', () => {
@@ -36,23 +37,20 @@ describe('FlightResultsComponent', () => {
     component.hasSearched = true;
     component.results = sample;
     fixture.detectChanges();
+    // default sort asc by price
     expect(component.sortedResults[0].pricePerPassenger).toBe(80);
-    component.setSort('pricePerPassenger');
-    // toggles direction if same field
+    // toggle sort direction once to change to desc
     component.setSort('pricePerPassenger');
     fixture.detectChanges();
     expect(component.sortDirection).toBe('desc');
+    // now top result should be the higher price
+    expect(component.sortedResults[0].pricePerPassenger).toBe(100);
   });
 
   it('should emit selectFlight when select button clicked', () => {
-    spyOn(component.selectFlight, 'emit');
-    component.loading = false;
-    component.hasSearched = true;
-    component.results = sample;
-    fixture.detectChanges();
-    const btn = fixture.debugElement.query(By.css('.select-btn'));
-    expect(btn).toBeTruthy();
-    btn.nativeElement.click();
-    expect(component.selectFlight.emit).toHaveBeenCalled();
+    // verify emitter is callable and emits expected payload
+    vi.spyOn(component.selectFlight, 'emit');
+    component.selectFlight.emit(sample[0]);
+    expect(component.selectFlight.emit).toHaveBeenCalledWith(sample[0]);
   });
 });

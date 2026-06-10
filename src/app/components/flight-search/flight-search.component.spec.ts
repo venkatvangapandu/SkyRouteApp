@@ -42,16 +42,16 @@ describe('FlightSearchComponent', () => {
   });
 
   it('form should be invalid initially and show validation', () => {
-    expect(component.form.valid).toBeFalse();
+    expect(component.form.valid).toBeFalsy();
     component.form.markAllAsTouched();
     fixture.detectChanges();
     const originError = fixture.debugElement.query(By.css('#origin + .error'));
     // error element exists for touched invalid controls
-    expect(component.form.get('origin')?.invalid).toBeTrue();
+    expect(component.form.get('origin')?.invalid).toBeTruthy();
   });
 
   it('should emit search event when form is valid and submitted', () => {
-    spyOn(component.search, 'emit');
+    vi.spyOn(component.search, 'emit');
     component.form.setValue({
       origin: 'AAA',
       destination: 'BBB',
@@ -59,17 +59,17 @@ describe('FlightSearchComponent', () => {
       passengers: 2,
       cabinClass: 'Economy'
     });
-    expect(component.form.valid).toBeTrue();
+    expect(component.form.valid).toBeTruthy();
     component.submit();
-    expect(component.search.emit).toHaveBeenCalledWith(jasmine.objectContaining({ origin: 'AAA', destination: 'BBB' }));
+    expect(component.search.emit).toHaveBeenCalledWith(expect.objectContaining({ origin: 'AAA', destination: 'BBB' }));
   });
 
   it('should enforce passenger min/max validation', () => {
     component.form.get('passengers')?.setValue(0);
-    expect(component.form.get('passengers')?.valid).toBeFalse();
+    expect(component.form.get('passengers')?.valid).toBeFalsy();
     component.form.get('passengers')?.setValue(10);
-    expect(component.form.get('passengers')?.valid).toBeFalse();
+    expect(component.form.get('passengers')?.valid).toBeFalsy();
     component.form.get('passengers')?.setValue(3);
-    expect(component.form.get('passengers')?.valid).toBeTrue();
+    expect(component.form.get('passengers')?.valid).toBeTruthy();
   });
 });
