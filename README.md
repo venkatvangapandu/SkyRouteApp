@@ -1,59 +1,61 @@
-# SkyrouteFrontend
+# SkyRoute Travel Platform — Flight Search & Booking
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.0.
+Senior Full-Stack Developer Challenge — SkyRoute Travel Platform (Confidential)
 
-## Development server
+1) Introduction
+- Small Flight Search & Booking module (Angular frontend + backend API mocks).
+- Spec-driven: spec.md committed before implementation; tests map to requirements.
 
-To start a local development server, run:
+2) AI tooling
+- Tools: GitHub Copilot + assistant (internal) used during development.
+- Model: repository-integrated assistant; used for refactors, test scaffolding, prompts recorded in prompts.md.
 
-```bash
-ng serve
-```
+3) Architecture (key layers)
+- UI (Angular standalone components: FlightSearch, FlightResults, Booking)
+- Service layer (FlightService: API client + shared lookups)
+- API layer (ASP.NET Core backend or mocks: search, booking, provider adapters)
+- Provider adapters (GlobalAir, BudgetWings mocks)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Architecture diagram (ASCII)
 
-## Code scaffolding
+  Browser
+    └─ Angular SPA
+        ├─ Components (FlightSearch / FlightResults / Booking)
+        └─ Services (FlightService)
+            └─ HTTP → Backend API
+                 ├─ /api/flights/search  (aggregates provider adapters)
+                 └─ /api/flights/book
+                     ├─ GlobalAir adapter (fuel surcharge)
+                     └─ BudgetWings adapter (promo discount)
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+4) Project structure
+- src/
+  - app/
+    - components/ (flight-search, flight-results, booking)
+    - services/ (flight.service.ts)
+    - models/ (interfaces)
+    - app.component.ts, main.ts, main.server.ts
+  - spec.md, prompts.md
+  - package.json, angular.json
 
-```bash
-ng generate component component-name
-```
+5) Tech stack
+- Language: TypeScript ~6.x
+- Framework: Angular ^22.0.0
+- Testing: Vitest ^4.0.8 (used via ng test integration)
+- Backend (expected): .NET (recommend .NET 8 SDK for API mocks)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+6) API reference
+- Swagger UI (backend expected): https://localhost:44382/swagger
 
-```bash
-ng generate --help
-```
+7) How to run locally (prereqs + commands)
+- Prereqs: Node.js (>=18), npm, Angular CLI (optional), .NET SDK (if running backend)
+- Install deps: npm ci
+- Run frontend (dev): npm start    # runs `ng serve`
+- Build frontend: npm run build
+- Run unit tests: npm test         # `ng test` (Vitest)
+- Backend (if available): dotnet build && dotnet run (in backend project)
+- Backend tests: dotnet test (in backend project)
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Notes
+- API base URL is configured in src/app/services/flight.service.ts (change to environment config for production).
+- See spec.md for the implementation spec and prompts.md for AI interaction log.
