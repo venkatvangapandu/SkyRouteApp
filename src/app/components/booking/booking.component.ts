@@ -67,10 +67,10 @@ export class BookingComponent implements OnChanges {
   }
 
   passportValidator: ValidatorFn = (control: AbstractControl) => {
-    return /^[A-Z0-9]{6,9}$/i.test(control.value) ? null : { passport: true };
+    return /^[A-Z0-9]{12}$/i.test(control.value) ? null : { passport: true };
   };
   nationalIdValidator: ValidatorFn = (control: AbstractControl) => {
-    return /^[0-9]{6,12}$/.test(control.value) ? null : { nationalId: true };
+    return /^[0-9]{10}$/.test(control.value) ? null : { nationalId: true };
   };
 
   updateDocumentValidators() {
@@ -78,13 +78,14 @@ export class BookingComponent implements OnChanges {
     for (let i = 0; i < this.passengers.length; i++) {
       const docControl = this.passengers.at(i).get('documentNumber');
       if (docControl) {
-        docControl.clearValidators();
-        docControl.addValidators([Validators.required]);
+        // Set validators explicitly to avoid duplicates
+        const validators = [Validators.required];
         if (this.isInternational) {
-          docControl.addValidators(this.passportValidator);
+          validators.push(this.passportValidator);
         } else {
-          docControl.addValidators(this.nationalIdValidator);
+          validators.push(this.nationalIdValidator);
         }
+        docControl.setValidators(validators);
         docControl.updateValueAndValidity();
       }
     }

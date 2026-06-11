@@ -47,8 +47,8 @@ describe('BookingComponent', () => {
     docControl?.setValue('123');
     component.updateDocumentValidators();
     expect(docControl?.valid).toBeFalsy();
-    // valid passport: 6 alphanumeric
-    docControl?.setValue('A123456');
+    // valid passport: 12 alphanumeric
+    docControl?.setValue('A12345678901');
     component.updateDocumentValidators();
     expect(docControl?.valid).toBeTruthy();
   });
@@ -60,7 +60,7 @@ describe('BookingComponent', () => {
     const p = component.passengers.at(0);
     p.get('fullName')?.setValue('John Doe');
     p.get('email')?.setValue('john@example.com');
-    p.get('documentNumber')?.setValue('A123456');
+    p.get('documentNumber')?.setValue('A12345678901');
     component.submit();
     expect(component.book.emit).toHaveBeenCalled();
   });

@@ -44,10 +44,10 @@
           <div class="error"
             *ngIf="passenger.get('documentNumber')?.touched && passenger.get('documentNumber')?.invalid">
             <span *ngIf="isInternational && passenger.get('documentNumber')?.errors?.['passport']">
-              Passport: 6-9 alphanumeric
+              Passport: 12 alphanumeric characters required
             </span>
             <span *ngIf="!isInternational && passenger.get('documentNumber')?.errors?.['nationalId']">
-              National ID: 6-12 digits
+              National ID: exactly 10 digits required
             </span>
             <span *ngIf="passenger.get('documentNumber')?.errors?.['required']">
               Required
